@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <title>ToDo List, Vue</title>
+    <style type="text/css">
+    	.action-icons{
+    		float: right;
+    		display: inline-block;
+    	}
+    	[v-cloak] { display:none; }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="root" v-cloak>
+    	<h1>Tareas</h1>
+    	<ul class="list-group tasks">
+            <li v-for="task in tasks" class="list-group-item" :class="{editing: task.editing, completed: !task.pending}">
+            	<a href="#"><span class="glyphicon" :class="task.pending ? 'glyphicon-unchecked' : 'glyphicon-check'"></span></a>
+				
+				<div class="action-icons">
+	            	<template v-if="!task.editing">
+	            		<span>{{ task.description }}</span>
+	            		<a href="#"><span class="glyphicon glyphicon-edit"></span></a>
+	            		<a href="#"><span class="glyphicon glyphicon-trash"></span></a>   
+	            	</template>
+
+	            	<template v-else>
+	            		<input type="text" v-model="task.description">
+							<a href="#"><span class="glyphicon glyphicon-ok"></span></a>
+							<a href="#"><span class="glyphicon glyphicon-remove"></span></a>    
+	            	</template>
+            	</div>
+            </li>
+        </ul>
+        
+        <form class="row">
+        	<input type="text" class="form-control col-md-11" placeholder="Nueva tarea">
+        	<button class="btn btn-success col-md-1"><i class="fa fa-plus"></i> Agregar</button>
+        </form>
+     
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
