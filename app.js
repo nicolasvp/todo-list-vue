@@ -30,9 +30,9 @@ Vue.component('list',{
 			this.task.description = this.task.draft,
 			this.task.draft = ''
 		},
-		deleteTask: function(index){
-			this.tasks.splice(this.index, 1);
-		}		
+		remove: function(){
+			this.$emit('remove',this.index);
+		}	
 	}
 });
 
@@ -71,6 +71,9 @@ var vm = new Vue({
 				});
 				this.new_task = '';
 			}
+		},
+		deleteTask: function(index){
+			this.tasks.splice(index, 1);
 		}		
 	}
 });

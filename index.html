@@ -23,7 +23,7 @@
     <div class="container" id="root" v-cloak>
     	<h1>Tareas</h1>
     	<ul class="list-group tasks">
-            <list v-for="(task,index) in tasks" :task="task" :index="index" :tasks="tasks" :key="index"></list>
+            <list v-for="(task,index) in tasks" :task="task" :index="index" :tasks="tasks" :key="index" @remove="deleteTask"></list>
         </ul>
         
         <form @submit.prevent="createTask" class="row">
@@ -46,7 +46,7 @@
                     <template v-if="!task.editing">
                         <span>{{ task.description }}</span>
                         <a @click="editTask"><icon draw="edit"></icon></a>
-                        <a @click="deleteTask"><icon draw="trash"></icon></a>   
+                        <a @click="remove"><icon draw="trash"></icon></a>   
                     </template>
 
                     <template v-else>
