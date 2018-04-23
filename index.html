@@ -13,6 +13,9 @@
     		float: right;
     		display: inline-block;
     	}
+        .completed > .action-icons{
+            text-decoration:line-through;
+        }
     	[v-cloak] { display:none; }
     </style>
   </head>
@@ -20,27 +23,11 @@
     <div class="container" id="root" v-cloak>
     	<h1>Tareas</h1>
     	<ul class="list-group tasks">
-            <li v-for="task in tasks" class="list-group-item" :class="{editing: task.editing, completed: !task.pending}">
-            	<a href="#"><span class="glyphicon" :class="task.pending ? 'glyphicon-unchecked' : 'glyphicon-check'"></span></a>
-				
-				<div class="action-icons">
-	            	<template v-if="!task.editing">
-	            		<span>{{ task.description }}</span>
-	            		<a href="#"><span class="glyphicon glyphicon-edit"></span></a>
-	            		<a href="#"><span class="glyphicon glyphicon-trash"></span></a>   
-	            	</template>
-
-	            	<template v-else>
-	            		<input type="text" v-model="task.description">
-							<a href="#"><span class="glyphicon glyphicon-ok"></span></a>
-							<a href="#"><span class="glyphicon glyphicon-remove"></span></a>    
-	            	</template>
-            	</div>
-            </li>
+            <list v-for="(task,index) in tasks" :task="task" :index="index" :tasks="tasks" :key="index"></list>
         </ul>
         
-        <form class="row">
-        	<input type="text" class="form-control col-md-11" placeholder="Nueva tarea">
+        <form @submit.prevent="createTask" class="row">
+        	<input type="text" class="form-control col-md-11" placeholder="Nueva tarea" v-model="new_task">
         	<button class="btn btn-success col-md-1"><i class="fa fa-plus"></i> Agregar</button>
         </form>
      
@@ -51,6 +38,27 @@
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    
+    <script type="text/x-template" id="task-list">
+        <li class="list-group-item" :class="{editing: task.editing, completed: !task.pending}">
+                <a @click="toggleStatus"><icon :draw="task.pending ? 'unchecked' : 'check'"></icon></a>
+                <div class="action-icons">
+                    <template v-if="!task.editing">
+                        <span>{{ task.description }}</span>
+                        <a @click="editTask"><icon draw="edit"></icon></a>
+                        <a @click="deleteTask"><icon draw="trash"></icon></a>   
+                    </template>
+
+                    <template v-else>
+                        <input type="text" v-model="task.description">
+                            <a @click="updateTask"><icon draw="ok"></icon></span></a>
+                            <a @click="cancelTask"><icon draw="remove"></icon></a>    
+                    </template>
+                </div>
+            </li>
+    </script>
+
     <script src="app.js"></script>
+
   </body>
 </html>
